@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Qadam AI — понятный маршрут государственной услуги">
+    <title>Qadam AI</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">HACKALEM AI · TRAINING MVP</p>
+          <h1>Qadam <span>AI</span></h1>
+          <p id="tagline">Понятный маршрут государственной услуги</p>
+        </div>
+        <div class="locale-switch" aria-label="Язык">
+          <button class="locale active" data-locale="ru">Русский</button>
+          <button class="locale" data-locale="kk">Қазақша</button>
+        </div>
+      </header>
+
+      <section class="panel composer">
+        <label for="message" id="prompt-label">Опишите ситуацию своими словами</label>
+        <textarea id="message" rows="4">Я переехал в Астану и хочу зарегистрироваться по новому адресу</textarea>
+        <div class="composer-footer">
+          <small id="privacy-note">Не указывайте ИИН, адрес или номер документа</small>
+          <button id="submit" class="primary">Найти маршрут</button>
+        </div>
+      </section>
+
+      <section id="result" class="panel result" aria-live="polite" hidden></section>
+
+      <footer>
+        Qadam AI предоставляет справочную информацию и не заменяет официальный ответ государственного органа.
+      </footer>
+    </main>
+    <script src="/app.js" defer></script>
+  </body>
+</html>
+
