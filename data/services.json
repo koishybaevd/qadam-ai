@@ -1,0 +1,91 @@
+{
+  "catalogVersion": "2026-09-15",
+  "services": [
+    {
+      "id": "residence-registration",
+      "title": {
+        "ru": "Регистрация по месту жительства",
+        "kk": "Тұрғылықты жері бойынша тіркелу"
+      },
+      "keywords": {
+        "ru": ["переехал", "прописка", "регистрация", "новый адрес"],
+        "kk": ["көшіп келдім", "тіркеу", "мекенжай", "жаңа мекенжай"]
+      },
+      "clarifications": [],
+      "documents": [],
+      "steps": [],
+      "channels": [],
+      "source": { "url": "", "verifiedAt": null },
+      "contentStatus": "needs_verification"
+    },
+    {
+      "id": "childbirth-services",
+      "title": {
+        "ru": "Услуги и выплаты после рождения ребёнка",
+        "kk": "Бала туғаннан кейінгі қызметтер мен төлемдер"
+      },
+      "keywords": {
+        "ru": ["родился ребёнок", "рождение", "пособие", "свидетельство"],
+        "kk": ["бала туды", "туу", "жәрдемақы", "куәлік"]
+      },
+      "clarifications": [],
+      "documents": [],
+      "steps": [],
+      "channels": [],
+      "source": { "url": "", "verifiedAt": null },
+      "contentStatus": "needs_verification"
+    },
+    {
+      "id": "individual-entrepreneur-registration",
+      "title": {
+        "ru": "Регистрация индивидуального предпринимателя",
+        "kk": "Жеке кәсіпкерді тіркеу"
+      },
+      "keywords": {
+        "ru": ["открыть ИП", "предприниматель", "начать бизнес", "ИП"],
+        "kk": ["ЖК ашу", "кәсіпкер", "бизнес бастау", "ЖК"]
+      },
+      "clarifications": [],
+      "documents": [],
+      "steps": [],
+      "channels": [],
+      "source": { "url": "", "verifiedAt": null },
+      "contentStatus": "needs_verification"
+    },
+    {
+      "id": "driver-license-replacement",
+      "title": {
+        "ru": "Замена водительского удостоверения",
+        "kk": "Жүргізуші куәлігін ауыстыру"
+      },
+      "keywords": {
+        "ru": ["заменить права", "истёк срок прав", "водительское удостоверение"],
+        "kk": ["куәлікті ауыстыру", "жүргізуші куәлігі", "мерзімі аяқталды"]
+      },
+      "clarifications": [],
+      "documents": [],
+      "steps": [],
+      "channels": [],
+      "source": { "url": "", "verifiedAt": null },
+      "contentStatus": "needs_verification"
+    },
+    {
+      "id": "unemployment-support",
+      "title": {
+        "ru": "Поддержка при потере работы",
+        "kk": "Жұмыстан айырылған кездегі қолдау"
+      },
+      "keywords": {
+        "ru": ["потерял работу", "безработный", "пособие", "поиск работы"],
+        "kk": ["жұмыстан айырылдым", "жұмыссыз", "төлем", "жұмыс іздеу"]
+      },
+      "clarifications": [],
+      "documents": [],
+      "steps": [],
+      "channels": [],
+      "source": { "url": "", "verifiedAt": null },
+      "contentStatus": "needs_verification"
+    }
+  ]
+}
+

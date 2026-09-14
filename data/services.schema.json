@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://qadam-ai.local/schemas/services.schema.json",
+  "title": "Qadam AI service catalog",
+  "type": "object",
+  "required": ["catalogVersion", "services"],
+  "properties": {
+    "catalogVersion": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "services": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/service" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "localizedText": {
+      "type": "object",
+      "required": ["ru", "kk"],
+      "properties": {
+        "ru": { "type": "string" },
+        "kk": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "service": {
+      "type": "object",
+      "required": [
+        "id",
+        "title",
+        "keywords",
+        "clarifications",
+        "documents",
+        "steps",
+        "channels",
+        "source",
+        "contentStatus"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "title": { "$ref": "#/$defs/localizedText" },
+        "keywords": {
+          "type": "object",
+          "required": ["ru", "kk"],
+          "properties": {
+            "ru": { "type": "array", "items": { "type": "string" } },
+            "kk": { "type": "array", "items": { "type": "string" } }
+          },
+          "additionalProperties": false
+        },
+        "clarifications": { "type": "array", "items": { "type": "object" } },
+        "documents": { "type": "array", "items": { "$ref": "#/$defs/localizedText" } },
+        "steps": { "type": "array", "items": { "$ref": "#/$defs/localizedText" } },
+        "channels": { "type": "array", "items": { "type": "string" } },
+        "source": {
+          "type": "object",
+          "required": ["url", "verifiedAt"],
+          "properties": {
+            "url": { "type": "string" },
+            "verifiedAt": { "type": ["string", "null"], "format": "date" }
+          },
+          "additionalProperties": false
+        },
+        "contentStatus": {
+          "enum": ["needs_verification", "verified", "expired"]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
+
