@@ -47,6 +47,13 @@ python app.py
 python -m unittest discover -s tests -v
 ```
 
+CI запускает те же проверки на Python 3.12 и 3.14 для каждого push и pull request.
+
+## Демонстрация и оценка
+
+- [Сценарий трёхминутного демо](docs/DEMO_SCRIPT.md)
+- [Самооценка по критериям HackAlem AI](SCORECARD.md)
+
 ## Проверенный источник демо-сценария
 
 - [eGov: как прописаться по месту жительства](https://egov.kz/cms/ru/articles/registration/kak_propisat_rebenka?mobile=no), проверено 15 сентября 2026 года.

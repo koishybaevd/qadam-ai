@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.12", "3.14"]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Set up Node.js for JavaScript syntax check
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Run Python tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Compile Python modules
+        run: python -m py_compile app.py src/qadam/agent.py src/qadam/openai_adapter.py
+
+      - name: Check browser JavaScript syntax
+        run: node --check static/app.js
+
+      - name: Validate JSON catalog
+        run: python -m json.tool data/services.json > /dev/null
+
