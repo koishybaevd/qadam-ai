@@ -3,10 +3,19 @@ from __future__ import annotations
 import json
 import re
 from pathlib import Path
-from typing import Any
+from typing import Any, Protocol
 
 
 SUPPORTED_LOCALES = {"ru", "kk"}
+
+
+class IntentClassifier(Protocol):
+    def classify(
+        self,
+        message: str,
+        locale: str,
+        services: list[dict[str, Any]],
+    ) -> tuple[str | None, float] | None: ...
 
 
 def _normalize(value: str) -> str:
@@ -14,9 +23,18 @@ def _normalize(value: str) -> str:
 
 
 class ServiceAgent:
-    def __init__(self, catalog_path: Path) -> None:
+    def __init__(
+        self,
+        catalog_path: Path,
+        classifier: IntentClassifier | None = None,
+    ) -> None:
         with catalog_path.open(encoding="utf-8") as catalog_file:
             self.catalog = json.load(catalog_file)
+        self.classifier = classifier
+
+    @property
+    def ai_enabled(self) -> bool:
+        return self.classifier is not None
 
     def route(self, payload: dict[str, Any]) -> dict[str, Any]:
         message = str(payload.get("message", "")).strip()
@@ -85,6 +103,27 @@ class ServiceAgent:
         }
 
     def _match(self, message: str, locale: str) -> tuple[dict[str, Any] | None, float]:
+        if self.classifier is not None:
+            classified = self.classifier.classify(
+                message,
+                locale,
+                self.catalog["services"],
+            )
+            if classified is not None:
+                service_id, confidence = classified
+                service = next(
+                    (
+                        candidate
+                        for candidate in self.catalog["services"]
+                        if candidate["id"] == service_id
+                    ),
+                    None,
+                )
+                return service, round(confidence, 2)
+
+        return self._match_locally(message, locale)
+
+    def _match_locally(self, message: str, locale: str) -> tuple[dict[str, Any] | None, float]:
         normalized = _normalize(message)
         best_service = None
         best_score = 0
@@ -118,4 +157,3 @@ class ServiceAgent:
     @staticmethod
     def _text(locale: str, ru: str, kk: str) -> str:
         return kk if locale == "kk" else ru
-

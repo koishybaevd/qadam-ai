@@ -57,7 +57,38 @@ class ServiceAgentTests(unittest.TestCase):
         self.assertEqual(result["status"], "needs_clarification")
         self.assertIn("тіркеу", result["question"]["text"].lower())
 
+    def test_external_classifier_can_match_a_paraphrased_intent(self):
+        class FakeClassifier:
+            def classify(self, _message, _locale, _services):
+                return "individual-entrepreneur-registration", 0.91
+
+        agent = ServiceAgent(
+            ROOT / "data" / "services.json",
+            classifier=FakeClassifier(),
+        )
+        result = agent.route({
+            "message": "Хочу легально работать на себя",
+            "locale": "ru",
+        })
+        self.assertEqual(result["status"], "content_unavailable")
+        self.assertEqual(result["matchedServiceId"], "individual-entrepreneur-registration")
+
+    def test_classifier_failure_falls_back_to_local_matching(self):
+        class FailingClassifier:
+            def classify(self, _message, _locale, _services):
+                return None
+
+        agent = ServiceAgent(
+            ROOT / "data" / "services.json",
+            classifier=FailingClassifier(),
+        )
+        result = agent.route({
+            "message": "Я переехал и хочу сделать регистрацию",
+            "locale": "ru",
+        })
+        self.assertEqual(result["status"], "needs_clarification")
+
+
 
 if __name__ == "__main__":
     unittest.main()
-

@@ -13,9 +13,13 @@ STATIC_ROOT = ROOT / "static"
 sys.path.insert(0, str(ROOT / "src"))
 
 from qadam.agent import ServiceAgent  # noqa: E402
+from qadam.openai_adapter import OpenAIIntentClassifier  # noqa: E402
 
 
-AGENT = ServiceAgent(ROOT / "data" / "services.json")
+AGENT = ServiceAgent(
+    ROOT / "data" / "services.json",
+    classifier=OpenAIIntentClassifier.from_environment(),
+)
 
 
 class QadamHandler(SimpleHTTPRequestHandler):
@@ -24,7 +28,12 @@ class QadamHandler(SimpleHTTPRequestHandler):
 
     def do_GET(self) -> None:
         if self.path == "/api/health":
-            self._send_json({"status": "ok"})
+            self._send_json(
+                {
+                    "status": "ok",
+                    "routingMode": "openai" if AGENT.ai_enabled else "local_fallback",
+                }
+            )
             return
         super().do_GET()
 
@@ -76,4 +85,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

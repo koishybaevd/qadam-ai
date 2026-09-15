@@ -51,6 +51,18 @@ submitButton.addEventListener("click", () => {
   requestRoute();
 });
 
+loadHealth();
+
+async function loadHealth() {
+  try {
+    const response = await fetch("/api/health", { cache: "no-store" });
+    const payload = await response.json();
+    document.querySelector("#routing-mode").textContent = payload.routingMode === "openai" ? "OPENAI" : "LOCAL";
+  } catch (_error) {
+    document.querySelector("#routing-mode").textContent = "OFFLINE";
+  }
+}
+
 function applyCopy() {
   const text = copy[state.locale];
   document.querySelector("#tagline").textContent = text.tagline;
@@ -142,4 +154,3 @@ function escapeHtml(value) {
     '"': "&quot;",
   })[character]);
 }
-
